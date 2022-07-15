@@ -1,11 +1,17 @@
 [package]
-name = ""
+name = "microservice"
 version = "999.999.999"
 edition = "2021"
 authors = ["Kviring A.V. <alex@kviring.com>"]
 license = "Apache-2.0"
-description = ""
-repository = ""
+description = "Base for rust microservice"
+repository = "https://github.com/cheetah-game-platform/microservice"
 
 [dependencies]
-
+tracing = { version = "0.1.31" }
+tracing-log = { version = "0.1.2" }
+tracing-loki-layer = "0.1.0"
+tracing-subscriber = { version = "0.3.9", features = ["env-filter"] }
+heapless = "0.7.10"
+prometheus-measures-exporter="0.0.1"
+tonic = "0.6.2"

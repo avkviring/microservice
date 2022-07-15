@@ -1,2 +1,5 @@
-# template-rust-library
-Project template for rust library
+# Основа для микросервиса
+
+- инициализация trace с loki
+- инициализация prometheus
+
