@@ -22,19 +22,14 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
+      - uses: actions/checkout@v3
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
-      - name: Install nightly toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
-      - uses: actions/checkout@v3
+          components: rustfmt, clippy
       - name: Lint
         run: |
           cargo fmt --all -- --check
@@ -43,6 +38,12 @@ jobs:
         run: |
           cargo install --locked cargo-outdated || true
           cargo install --locked cargo-udeps || true
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
       - name: Check
         run: |           
            cargo outdated -d 1 --exit-code 1
