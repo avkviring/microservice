@@ -40,7 +40,7 @@ jobs:
       - name: Check
         run: |           
            cargo outdated -d 1 --exit-code 1
-           cargo udeps
+           cargo +nightly udeps
       - name: Build
         run: cargo build
       - name: Run tests
