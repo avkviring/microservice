@@ -1,14 +1,14 @@
 name: Test
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   test:
     runs-on: ubuntu-latest
+    container:
+      image:  ghcr.io/cheetah-game-platform/rust-builder-x86_64-unknown-linux-musl:0.0.2
     steps:
       - name: Set up cargo cache
         uses: actions/cache@v3
@@ -23,27 +23,6 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
       - uses: actions/checkout@v3
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          components: rustfmt, clippy
-      - name: Lint
-        run: |
-          cargo fmt --all -- --check
-          cargo clippy -- -D warnings
-      - name: Install cargo check tools
-        run: |
-          cargo install --locked cargo-outdated || true
-          cargo install --locked cargo-udeps || true
-      - name: Install nightly toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
       - name: Check
         run: |           
            cargo outdated -d 1 --exit-code 1
